@@ -18,6 +18,38 @@ namespace SetTitle {
 
 }
 
+namespace InitializedOption {
+
+	class Option {
+
+	public:
+
+		inline bool setInit() {
+
+			std::cout << "Enter Option (Y | N): " << std::endl;
+			char option = getchar();
+
+			switch (option) {
+
+			case 'Y':
+				std::cout << "Ready to Continue" << std::endl;
+				break;
+
+			case 'N':
+				std::cout << "Failed to be Ready to Continue" << std::endl;
+				break;
+
+			default:
+				break;
+			}
+
+
+			return true;
+
+		}	
+	};
+}
+
 namespace Convert {
 
 	float seconds;
@@ -112,6 +144,9 @@ int main() {
 	std::cout << std::endl;
 
 	std::cout << SetTitle::SetTitle(Title::getTitle("Pom Timer")) << std::endl;
+
+	InitializedOption::Option m;
+	m.setInit();
 
 	std::cout << std::endl;
 	int i = 1;
