@@ -18,6 +18,18 @@ namespace SetTitle {
 
 }
 
+
+static std::string AppendMessageEnded(std::string message) {
+
+	return message.append("DONE");
+}
+
+static std::string upperTextConsole(std::string strBasedValue) {
+	std::transform(strBasedValue.begin(), strBasedValue.end(), strBasedValue.begin(), ::toupper);
+	return strBasedValue;
+}
+
+
 namespace InitializedOption {
 
 	class Option {
@@ -33,14 +45,20 @@ namespace InitializedOption {
 
 			case 'Y':
 				std::cout << "Ready to Continue" << std::endl;
+				std::cout << "You Chose: " << upperTextConsole("Y") << std::endl;
+
 				break;
 
 			case 'N':
 				std::cout << "Failed to be Ready to Continue" << std::endl;
+				std::cout << "You Chose: " << upperTextConsole("Y") << std::endl;
+				
+				exit(0);
 				break;
 
 			default:
 				break;
+				exit(0);
 			}
 
 
@@ -122,12 +140,12 @@ public:
 	}
 };
 
-static std::string AppendMessageEnded(std::string message) {
-
-	return message.append("DONE");
-}
-
 const float LINES_SIZE = 20.0f * 2.0f;
+
+static void Option(std::string optionByUser) {
+
+	std::cout << upperTextConsole(optionByUser) << std::endl;
+}
 
 int main() {
 
@@ -147,6 +165,7 @@ int main() {
 
 	InitializedOption::Option m;
 	m.setInit();
+
 
 	std::cout << std::endl;
 	int i = 1;
