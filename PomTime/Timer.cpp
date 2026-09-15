@@ -1,7 +1,12 @@
 #include <iostream>
 #include <map>
+#include <filesystem>
 #include <algorithm>
 #include <Windows.h>
+#include "FileSystems.cpp"
+#include <fstream>
+
+#pragma warning(disable : 4996);
 
 namespace SetTitle {
 
@@ -62,6 +67,29 @@ public:
 	}
 };
 
+class FileCreated {
+
+public:
+
+	inline bool files(std::string createdFileAt) {
+
+		DateNow dateNow;
+		if (std::filesystem::exists(createdFileAt)) {
+
+			std::filesystem::path p(createdFileAt);
+
+			std::cout << p.filename() << "Was Created" << std::endl;
+
+			std::ofstream fileCreated(p.filename());
+			fileCreated << dateNow.getDateNow();
+
+			return true;
+		}
+
+		return false;
+	}
+};
+
 static std::string AppendMessageEnded(std::string message) {
 
 	return message.append("DONE");
@@ -105,6 +133,9 @@ int main() {
 
 			TimerStart startingTimer;
 			startingTimer.getLoopedUI(i);
+			FileCreated files;
+
+			files.files("datenow.txt");
 		}
 	}
 
