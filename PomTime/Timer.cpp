@@ -22,6 +22,31 @@ namespace SetTitle
 
 }
 
+class FileCreated
+{
+
+public:
+	inline bool files(std::string createdFileAt)
+	{
+
+		DateNow dateNow;
+		if (std::filesystem::exists(createdFileAt))
+		{
+
+			std::filesystem::path p(createdFileAt);
+
+			std::cout << p.filename() << "Was Created" << std::endl;
+
+			std::ofstream fileCreated(p.filename());
+			fileCreated << dateNow.getDateNow();
+
+			return true;
+		}
+
+		return false;
+	}
+};
+
 static std::string AppendMessageEnded(std::string message)
 {
 
@@ -105,6 +130,13 @@ public:
 	}
 };
 
+namespace TimeMeshes
+{
+	void GetMeshByName25();
+	void GetMeshByNameOneHour();
+	void GetMeshByNameTwoHours();
+}
+
 class TimerStart
 {
 
@@ -127,30 +159,60 @@ public:
 	}
 };
 
-class FileCreated
+void TimeMeshes::GetMeshByName25()
 {
 
-public:
-	inline bool files(std::string createdFileAt)
+	int i = 0;
+	i += 1;
+
+	if (i == 25 * 60)
 	{
 
-		DateNow dateNow;
-		if (std::filesystem::exists(createdFileAt))
-		{
-
-			std::filesystem::path p(createdFileAt);
-
-			std::cout << p.filename() << "Was Created" << std::endl;
-
-			std::ofstream fileCreated(p.filename());
-			fileCreated << dateNow.getDateNow();
-
-			return true;
-		}
-
-		return false;
+		std::cout << AppendMessageEnded("Done") << std::endl;
+		Sounds::GetSound();
+		Sleep(2 * 1000);
 	}
-};
+
+	else
+	{
+
+		TimerStart startingTimer;
+		startingTimer.getLoopedUI(i);
+		FileCreated files;
+
+		files.files("datenow.txt");
+	}
+}
+
+void TimeMeshes::GetMeshByNameOneHour()
+{
+
+	int i = 0;
+	i += 1;
+
+	if (i == 60 * 60)
+	{
+
+		std::cout << AppendMessageEnded("Done") << std::endl;
+		Sounds::GetSound();
+		Sleep(2 * 1000);
+	}
+}
+
+void TimeMeshes::GetMeshByNameTwoHours()
+{
+
+	int i = 0;
+	i += 1;
+
+	if (i == 120 * 60)
+	{
+
+		std::cout << AppendMessageEnded("Done") << std::endl;
+		Sounds::GetSound();
+		Sleep(2 * 1000);
+	}
+}
 
 const float LINES_SIZE = 20.0f * 2.0f;
 
@@ -193,23 +255,20 @@ int main()
 
 		i += 1;
 
-		if (i == 25 * 60)
+		std::string commandType;
+		std::cout << "Enter Type 1H - 1 Hour | 2H - 2 Hours | 25 - Minutes";
+		std::cin >> commandType;
+		if (commandType == "25")
 		{
-
-			std::cout << AppendMessageEnded("Done") << std::endl;
-			Sounds::GetSound();
-			Sleep(2 * 1000);
-			break;
+			TimeMeshes::GetMeshByName25();
 		}
-
-		else
+		if (commandType == "1H")
 		{
-
-			TimerStart startingTimer;
-			startingTimer.getLoopedUI(i);
-			FileCreated files;
-
-			files.files("datenow.txt");
+			TimeMeshes::GetMeshByNameOneHour();
+		}
+		if (commandType == "2H")
+		{
+			TimeMeshes::GetMeshByNameTwoHours();
 		}
 	}
 
