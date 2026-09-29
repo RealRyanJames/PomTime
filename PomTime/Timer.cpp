@@ -5,12 +5,16 @@
 #include <Windows.h>
 #include "FileSystems.cpp"
 #include <fstream>
+#include "PoppedMessage.cpp"
+#include "./Types/BeepSound.cpp"
 
 #pragma warning(disable : 4996);
 
-namespace SetTitle {
+namespace SetTitle
+{
 
-	static std::string SetTitle(std::string titleValue) {
+	static std::string SetTitle(std::string titleValue)
+	{
 
 		std::transform(titleValue.begin(), titleValue.end(), titleValue.begin(), ::toupper);
 		return titleValue;
@@ -18,30 +22,33 @@ namespace SetTitle {
 
 }
 
-
-static std::string AppendMessageEnded(std::string message) {
+static std::string AppendMessageEnded(std::string message)
+{
 
 	return message.append("DONE");
 }
 
-static std::string upperTextConsole(std::string strBasedValue) {
+static std::string upperTextConsole(std::string strBasedValue)
+{
 	std::transform(strBasedValue.begin(), strBasedValue.end(), strBasedValue.begin(), ::toupper);
 	return strBasedValue;
 }
 
+namespace InitializedOption
+{
 
-namespace InitializedOption {
-
-	class Option {
+	class Option
+	{
 
 	public:
-
-		inline bool setInit() {
+		inline bool setInit()
+		{
 
 			std::cout << "Enter Option (Y | N): " << std::endl;
 			char option = getchar();
 
-			switch (option) {
+			switch (option)
+			{
 
 			case 'Y':
 				std::cout << "Ready to Continue" << std::endl;
@@ -52,7 +59,7 @@ namespace InitializedOption {
 			case 'N':
 				std::cout << "Failed to be Ready to Continue" << std::endl;
 				std::cout << "You Chose: " << upperTextConsole("Y") << std::endl;
-				
+
 				exit(0);
 				break;
 
@@ -61,70 +68,75 @@ namespace InitializedOption {
 				exit(0);
 			}
 
-
 			return true;
-
-		}	
+		}
 	};
 }
 
-namespace Convert {
+namespace Convert
+{
 
 	float seconds;
 	float hours;
 
-	static std::map<std::string, std::string> GetUI(std::string lines) {
+	static std::map<std::string, std::string> GetUI(std::string lines)
+	{
 
 		std::map<std::string, std::string> linesWritten;
 
-		for (int i = 2; i < 20 / 2; i++) {
+		for (int i = 2; i < 20 / 2; i++)
+		{
 
-			linesWritten.insert({ "", lines });
+			linesWritten.insert({"", lines});
 		}
 
 		return linesWritten;
 	}
 }
 
-class Title {
+class Title
+{
 
 public:
-
-	static std::string getTitle(std::string title) {
-
+	static std::string getTitle(std::string title)
+	{
 
 		return title;
 	}
-
 };
 
-class TimerStart {
+class TimerStart
+{
 
 public:
-
-	static int initialized(int startedIndex) {
+	static int initialized(int startedIndex)
+	{
 
 		startedIndex = -1;
 		return startedIndex + 1;
 	}
 
-	static void getLoopedUI(int index) {
+	static void getLoopedUI(int index)
+	{
 
-		if (initialized(0) > -1) {
+		if (initialized(0) > -1)
+		{
 
 			Sleep(1 * 600);
 		}
 	}
 };
 
-class FileCreated {
+class FileCreated
+{
 
 public:
-
-	inline bool files(std::string createdFileAt) {
+	inline bool files(std::string createdFileAt)
+	{
 
 		DateNow dateNow;
-		if (std::filesystem::exists(createdFileAt)) {
+		if (std::filesystem::exists(createdFileAt))
+		{
 
 			std::filesystem::path p(createdFileAt);
 
@@ -142,18 +154,25 @@ public:
 
 const float LINES_SIZE = 20.0f * 2.0f;
 
-static void Option(std::string optionByUser) {
+static void Option(std::string optionByUser)
+{
 
 	std::cout << upperTextConsole(optionByUser) << std::endl;
 }
 
-int main() {
+int main()
+{
 
+	if (AppendNameOutput::isInitCallable(1))
+	{
+	}
 	std::string linesGet = "-";
 	std::map<std::string, std::string> lines = Convert::GetUI(linesGet);
 
-	for (auto& line : lines) {
-		for (int i = 0; i < LINES_SIZE; i++) {
+	for (auto &line : lines)
+	{
+		for (int i = 0; i < LINES_SIZE; i++)
+		{
 
 			std::cout << line.second;
 		}
@@ -166,24 +185,25 @@ int main() {
 	InitializedOption::Option m;
 	m.setInit();
 
-
 	std::cout << std::endl;
 	int i = 1;
 
-	
-	while (i >= 0) {
+	while (i >= 0)
+	{
 
 		i += 1;
 
-		if (i == 25 * 60) {
+		if (i == 25 * 60)
+		{
 
 			std::cout << AppendMessageEnded("Done") << std::endl;
+			Sounds::GetSound();
 			Sleep(2 * 1000);
 			break;
 		}
 
-
-		else {
+		else
+		{
 
 			TimerStart startingTimer;
 			startingTimer.getLoopedUI(i);
@@ -193,14 +213,16 @@ int main() {
 		}
 	}
 
-	for (auto& line : lines) {
-		for (int i = 0; i < LINES_SIZE; i++) {
+	for (auto &line : lines)
+	{
+		for (int i = 0; i < LINES_SIZE; i++)
+		{
 			std::cout << line.second;
 		}
 	}
 
 	std::cout << std::endl;
 
-	system("pause > 0");
+	AppliationTitle::InitSetPause();
 	return 0;
 }
